@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Contacts | SafeStride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="brand">
+                <span class="brand-icon">🛡️</span>
+                <span>SafeStride</span>
+            </a>
+            <div class="nav-menu">
+                <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+                <div class="nav-links">
+                    <a href="{{ url_for('dashboard') }}" data-i18n="navDashboard">Dashboard</a>
+                    <a href="{{ url_for('sos_page') }}" data-i18n="navSos">SOS</a>
+                    <a href="{{ url_for('route_finder') }}" data-i18n="navRoutes">Routes</a>
+                    <a href="{{ url_for('live_sharing') }}" data-i18n="navLive">Live Sharing</a>
+                    <a href="{{ url_for('contacts_page') }}" class="active" data-i18n="navContacts">Contacts</a>
+                    <a href="{{ url_for('tips_page') }}" data-i18n="navTips">Tips</a>
+                    <a href="{{ url_for('profile_page') }}" data-i18n="navProfile">Profile</a>
+                    <a href="{{ url_for('logout') }}" data-i18n="navLogout">Logout</a>
+                    <button id="themeToggle" class="btn-outline" aria-label="Toggle theme">🌙</button>
+                    <button id="langToggle" class="btn-outline" aria-label="Switch language">தமிழ்</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard-wrap">
+        <div class="container">
+            <div class="dashboard-grid">
+                <div class="panel" style="padding:1.5rem;">
+                    <h2 data-i18n="addContact">Add Contact</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" data-i18n="contactName">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-i18n="contactPhone">Phone</label>
+                            <input type="text" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="relation" data-i18n="contactRelation">Relation</label>
+                            <input type="text" id="relation" name="relation">
+                        </div>
+                        <button type="submit" class="btn" data-i18n="saveContact">Save Contact</button>
+                    </form>
+                </div>
+                <div class="panel" style="padding:1.5rem;">
+                    <h2 data-i18n="savedContacts">Saved Contacts</h2>
+                    <ul class="contact-list" id="contactList"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

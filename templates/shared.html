@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shared Location | SafeStride</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container" style="padding:2rem;">
+    <div class="panel" style="padding:1.5rem; text-align:center;">
+      <h2>Live location shared</h2>
+      <p>Latitude: {{ share['latitude'] }}, Longitude: {{ share['longitude'] }}</p>
+      <p>Shared at: {{ share['created_at'] }}</p>
+      <p>
+        <a class="btn" href="https://maps.google.com/?q={{ share['latitude'] }},{{ share['longitude'] }}" target="_blank" rel="noopener">Open in Google Maps</a>
+        <a class="btn-outline" href="https://www.openstreetmap.org/?mlat={{ share['latitude'] }}&mlon={{ share['longitude'] }}#map=18/{{ share['latitude'] }}/{{ share['longitude'] }}" target="_blank" rel="noopener">Open in OpenStreetMap</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

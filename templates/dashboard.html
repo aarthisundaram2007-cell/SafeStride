@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SafeStride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="brand">
+                <img src="{{ url_for('static', filename='images/Logo.jpeg') }}" alt="SafeStride Logo" class="brand-logo">
+                <span>SafeStride</span>
+            </a>
+            <div class="nav-menu">
+                <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+                <div class="nav-links">
+                    <a href="{{ url_for('dashboard') }}" class="active" data-i18n="navDashboard">Dashboard</a>
+                    <a href="{{ url_for('sos_page') }}" data-i18n="navSos">SOS</a>
+                    <a href="{{ url_for('route_finder') }}" data-i18n="navRoutes">Routes</a>
+                    <a href="{{ url_for('live_sharing') }}" data-i18n="navLive">Live Sharing</a>
+                    <a href="{{ url_for('contacts_page') }}" data-i18n="navContacts">Contacts</a>
+                    <a href="{{ url_for('tips_page') }}" data-i18n="navTips">Tips</a>
+                    <a href="{{ url_for('profile_page') }}" data-i18n="navProfile">Profile</a>
+                    <a href="{{ url_for('logout') }}" data-i18n="navLogout">Logout</a>
+                    <button id="themeToggle" class="btn-outline" aria-label="Toggle theme">🌙</button>
+                    <button id="langToggle" class="btn-outline" aria-label="Switch language">தமிழ்</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard-wrap">
+        <div class="container">
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% for category, message in messages %}
+                        <div class="flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+            <div class="dashboard-grid">
+                <div>
+                    <div class="stat-card" style="margin-bottom:1rem;">
+                        <div class="stat-row">
+                            <div>
+                                <p style="color:var(--muted);" data-i18n="dashboardWelcome">Welcome</p>
+                                <h2>{{ user.full_name }}</h2>
+                            </div>
+                            <div class="btn"><span data-i18n="safetyScore">Safety Score</span>: {{ safety_score }}</div>
+                        </div>
+                    </div>
+                    <div class="map-card">
+                        <h3 data-i18n="currentLocation">Current Location</h3>
+                        <div class="map-box" id="mapBox" data-i18n="loadingMap">Loading map...</div>
+                        <p id="locationStatus" data-i18n="checkingLocation">Checking location...</p>
+                        <p id="coordsValue">--</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="sos-panel">
+                        <div style="font-size:1.4rem; margin-bottom:0.4rem;">🚨</div>
+                        <h3 data-i18n="emergencySOS">Emergency SOS</h3>
+                        <p data-i18n="sosDescription">Send instant help with one click.</p>
+                        <a href="{{ url_for('sos_page') }}" class="sos-btn" data-i18n="quickAccess">Quick Access</a>
+                    </div>
+                    <div class="panel" style="margin-top:1rem; padding:1rem;">
+                        <h3 data-i18n="emergencyContacts">Emergency Contacts</h3>
+                        <ul class="contact-list">
+                            {% for contact in contacts[:4] %}
+                                <li class="contact-item">
+                                    <div>
+                                        <strong>{{ contact.name }}</strong><br>
+                                        <span>{{ contact.phone }}</span>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="panel" style="margin-top:1rem; padding:1rem;">
+                        <h3 data-i18n="recentAlerts">Recent Alerts</h3>
+                        <ul class="alert-list">
+                            {% for alert in alerts %}
+                                <li class="alert-item">
+                                    <span>{{ alert.message }}</span>
+                                    <small>{{ alert.created_at }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <p>&copy; <span id="year"></span> SafeStride</p>
+            <p data-i18n="footerAlways">Always stay connected to safety.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

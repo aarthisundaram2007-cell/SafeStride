@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS | SafeStride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="brand">
+                <img src="{{ url_for('static', filename='images/Logo.jpeg') }}" alt="SafeStride Logo" class="brand-logo">
+                <span>SafeStride</span>
+            </a>
+            <div class="nav-menu">
+                <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+                <div class="nav-links">
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('sos_page') }}" class="active">SOS</a>
+                    <a href="{{ url_for('route_finder') }}">Routes</a>
+                    <a href="{{ url_for('live_sharing') }}">Live Sharing</a>
+                    <a href="{{ url_for('contacts_page') }}">Contacts</a>
+                    <a href="{{ url_for('tips_page') }}">Tips</a>
+                    <a href="{{ url_for('profile_page') }}">Profile</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                    <button id="themeToggle" class="btn-outline" aria-label="Toggle theme">🌙</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard-wrap">
+        <div class="container">
+            <div class="hero-card premium-hero" style="margin-bottom:1rem;">
+                <div class="hero-badge">🚨 Emergency Response Center</div>
+                <h2>Premium SOS Control Center</h2>
+                <p>Send emergency alerts instantly, notify trusted contacts, and preserve your live location in one secure action.</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="panel sos-card" style="padding:1.3rem;">
+                    <div class="sos-card-header">
+                        <span class="tip-badge">🚨</span>
+                        <div>
+                            <h3>Trigger Emergency Alert</h3>
+                            <p>Share your current GPS and message with your trusted circle.</p>
+                        </div>
+                    </div>
+
+                    <div class="status-pill">Live GPS ready</div>
+
+                    <textarea id="sosMessage" class="form-group premium-editor" rows="7">EMERGENCY ALERT
+I may be in danger.
+Please check my live location immediately.
+Current Location:
+Google Maps Link:
+Current Time:</textarea>
+
+                    <div class="sos-actions">
+                        <button id="sosButton" class="btn-danger">Trigger SOS</button>
+                        <button id="copyMessageBtn" class="btn-outline">Copy Message</button>
+                    </div>
+
+                    <div id="sosResult" class="sos-result" aria-live="polite"></div>
+                </div>
+
+                <div class="map-card">
+                    <div class="section-heading">
+                        <h3>Live Emergency Status</h3>
+                        <span class="status-pill success">Secured</span>
+                    </div>
+                    <div class="map-box" id="mapBox">Location map will appear here.</div>
+                    <p id="locationStatus">Location not fetched yet.</p>
+                    <p id="coordsValue">--</p>
+
+                    <div class="panel" style="margin-top:0.75rem; padding:0.85rem;">
+                        <h4 style="margin-bottom:0.5rem;">Emergency Contacts</h4>
+                        {% if contacts %}
+                            {% for contact in contacts %}
+                                <div class="contact-item" style="margin-bottom:0.45rem;">
+                                    <div>
+                                        <strong>{{ contact.name }}</strong><br>
+                                        <span>{{ contact.phone }}</span>
+                                    </div>
+                                    <span class="status-pill success">Ready</span>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="muted">Add contacts in the Contacts page to notify them instantly.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="panel" style="margin-top:0.75rem; padding:0.85rem;">
+                        <h4 style="margin-bottom:0.5rem;">Recent Alerts</h4>
+                        {% if alerts %}
+                            {% for alert in alerts %}
+                                <div class="alert-item" style="margin-bottom:0.4rem;">
+                                    <span>{{ alert.message or 'Emergency alert recorded' }}</span>
+                                    <small>{{ alert.created_at }}</small>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="muted">Your recent emergencies will appear here.</p>
+                        {% endif %}
+                    </div>
+
+                    <div id="recipientCards" style="display:flex;flex-direction:column;gap:0.6rem; margin-top:0.75rem;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

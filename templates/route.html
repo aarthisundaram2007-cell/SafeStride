@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Route Finder | SafeStride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="brand">
+                <span class="brand-icon">🛡️</span>
+                <span>SafeStride</span>
+            </a>
+            <div class="nav-menu">
+                <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+                <div class="nav-links">
+                    <a href="{{ url_for('dashboard') }}" data-i18n="navDashboard">Dashboard</a>
+                    <a href="{{ url_for('sos_page') }}" data-i18n="navSos">SOS</a>
+                    <a href="{{ url_for('route_finder') }}" class="active" data-i18n="navRoutes">Routes</a>
+                    <a href="{{ url_for('live_sharing') }}" data-i18n="navLive">Live Sharing</a>
+                    <a href="{{ url_for('contacts_page') }}" data-i18n="navContacts">Contacts</a>
+                    <a href="{{ url_for('tips_page') }}" data-i18n="navTips">Tips</a>
+                    <a href="{{ url_for('profile_page') }}" data-i18n="navProfile">Profile</a>
+                    <a href="{{ url_for('logout') }}" data-i18n="navLogout">Logout</a>
+                    <button id="themeToggle" class="btn-outline" aria-label="Toggle theme">🌙</button>
+                    <button id="langToggle" class="btn-outline" aria-label="Switch language">தமிழ்</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard-wrap">
+        <div class="container">
+            <div class="panel route-panel" style="padding:1.5rem;">
+                <h2 data-i18n="routeTitle">Safe Route Finder</h2>
+                <p data-i18n="routeDescription">Use your live location and destination to view a safer route and nearby support areas.</p>
+                <form id="routeForm" class="route-form">
+                    <div class="route-input-group">
+                        <label for="startLocation" data-i18n="routeLive">Live Location</label>
+                        <input id="startLocation" name="startLocation" type="text" data-i18n-placeholder="routeLivePlaceholder" placeholder="Auto-detected or enter a start point">
+                        <button type="button" id="useLiveLocationBtn" class="btn-outline" data-i18n="routeUseLive">Use My Live Location</button>
+                    </div>
+                    <div class="route-input-group">
+                        <label for="destinationInput" data-i18n="routeDestination">Destination</label>
+                        <input id="destinationInput" name="destinationInput" type="text" data-i18n-placeholder="routeDestinationPlaceholder" placeholder="Enter your destination">
+                    </div>
+                    <div class="route-actions">
+                        <button type="submit" class="btn" data-i18n="routeShow">Show Safe Route</button>
+                        <button type="button" id="routeResetBtn" class="btn-outline" data-i18n="routeReset">Reset</button>
+                    </div>
+                </form>
+                <div class="route-summary" id="routeSummary">Waiting for your location...</div>
+                <div style="display:flex;gap:0.6rem;align-items:center;margin-top:0.6rem;flex-wrap:wrap;">
+                    <button id="safeRouteBtn" class="btn">SAFE ROUTE</button>
+                    <button id="fastRouteBtn" class="btn-outline">FASTEST ROUTE</button>
+                    <div style="margin-left:auto; display:flex; gap:0.6rem; flex-wrap:wrap;">
+                        <div class="panel" style="padding:0.6rem 0.9rem;">Distance: <span id="routeDistance">--</span></div>
+                        <div class="panel" style="padding:0.6rem 0.9rem;">Duration: <span id="routeDuration">--</span></div>
+                        <div class="panel" style="padding:0.6rem 0.9rem;">ETA: <span id="routeETA">--</span></div>
+                        <div class="panel" style="padding:0.6rem 0.9rem;">Safety: <span id="routeSafety">--</span></div>
+                    </div>
+                </div>
+                <div id="routeInsights" class="panel" style="margin-top:0.8rem;padding:0.9rem;display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;justify-content:space-between;"></div>
+                <div id="routeMap" class="map-box" style="height:460px; margin-top:1rem;">Loading route map...</div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

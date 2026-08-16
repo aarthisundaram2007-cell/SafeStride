@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Location Sharing | SafeStride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="brand">
+                <span class="brand-icon">🛡️</span>
+                <span>SafeStride</span>
+            </a>
+            <div class="nav-menu">
+                <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+                <div class="nav-links">
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('sos_page') }}">SOS</a>
+                    <a href="{{ url_for('route_finder') }}">Routes</a>
+                    <a href="{{ url_for('live_sharing') }}" class="active">Live Sharing</a>
+                    <a href="{{ url_for('contacts_page') }}">Contacts</a>
+                    <a href="{{ url_for('tips_page') }}">Tips</a>
+                    <a href="{{ url_for('profile_page') }}">Profile</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                    <button id="themeToggle" class="btn-outline" aria-label="Toggle theme">🌙</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard-wrap">
+        <div class="container">
+            <div class="hero-card premium-hero" style="margin-bottom:1rem;">
+                <div class="hero-badge">📍 Live Tracking & Share</div>
+                <h2>Advanced Live Location Sharing</h2>
+                <p>Share your live GPS with trusted contacts instantly using a premium, animated sharing experience.</p>
+            </div>
+
+            <div class="map-card">
+                <div class="section-heading">
+                    <h3>Live Share Center</h3>
+                    <span class="status-pill success">Tracking live</span>
+                </div>
+                <div class="map-box" id="liveMap">Map will load once location is available.</div>
+                <div style="margin-top:0.75rem; display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
+                    <button id="shareLiveBtn" class="btn">Share Live Location</button>
+                    <button id="copyLocationBtn" class="btn-outline">Copy GPS</button>
+                    <button id="qrShareBtn" class="btn-outline">Show QR</button>
+                    <div id="liveStatus" class="status-pill">Checking your location...</div>
+                </div>
+
+                <div class="panel" style="margin-top:1rem; padding:0.9rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+                    <div style="min-width:240px">
+                        <div><strong>Latitude</strong>: <span id="ls_lat">--</span></div>
+                        <div><strong>Longitude</strong>: <span id="ls_lng">--</span></div>
+                        <div><strong>Accuracy</strong>: <span id="ls_accuracy">--</span> m</div>
+                        <div><strong>Speed</strong>: <span id="ls_speed">--</span> m/s</div>
+                        <div><strong>Heading</strong>: <span id="ls_heading">--</span></div>
+                        <div><strong>Last Updated</strong>: <span id="ls_updated">--</span></div>
+                    </div>
+                    <div style="flex:1">
+                        <h4 style="margin-bottom:0.4rem">Share History</h4>
+                        <div id="shareHistory" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+                    </div>
+                </div>
+
+                <div id="shareModal" class="panel" style="display:none; position:fixed; inset:0; margin:auto; width:min(720px,95%); height:auto; top:10%; z-index:1200; box-shadow:0 20px 60px rgba(0,0,0,.35);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <h3>Share Your Live Location</h3>
+                        <button id="closeShareModal" class="btn-outline">Close</button>
+                    </div>
+                    <p id="shareInfo">Preparing secure sharing options...</p>
+                    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.6rem;">
+                        <button id="whatsappShare" class="btn">WhatsApp</button>
+                        <button id="smsShare" class="btn-outline">SMS</button>
+                        <button id="emailShare" class="btn-outline">Email</button>
+                        <button id="copyLink" class="btn-outline">Copy Link</button>
+                        <button id="nativeShare" class="btn-outline">Native Share</button>
+                    </div>
+                    <div id="qrContainer" style="margin-top:1rem;display:none;justify-content:center;align-items:center;flex-direction:column;gap:0.4rem;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

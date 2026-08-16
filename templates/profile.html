@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | SafeStride</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('dashboard') }}" class="brand">
+                <span class="brand-icon">🛡️</span>
+                <span>SafeStride</span>
+            </a>
+            <div class="nav-menu">
+                <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+                <div class="nav-links">
+                    <a href="{{ url_for('dashboard') }}" data-i18n="navDashboard">Dashboard</a>
+                    <a href="{{ url_for('sos_page') }}" data-i18n="navSos">SOS</a>
+                    <a href="{{ url_for('route_finder') }}" data-i18n="navRoutes">Routes</a>
+                    <a href="{{ url_for('live_sharing') }}" data-i18n="navLive">Live Sharing</a>
+                    <a href="{{ url_for('contacts_page') }}" data-i18n="navContacts">Contacts</a>
+                    <a href="{{ url_for('tips_page') }}" data-i18n="navTips">Tips</a>
+                    <a href="{{ url_for('profile_page') }}" class="active" data-i18n="navProfile">Profile</a>
+                    <a href="{{ url_for('logout') }}" data-i18n="navLogout">Logout</a>
+                    <button id="themeToggle" class="btn-outline" aria-label="Toggle theme">🌙</button>
+                    <button id="langToggle" class="btn-outline" aria-label="Switch language">தமிழ்</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard-wrap">
+        <div class="container">
+            <div class="profile-card" style="padding:1.5rem;">
+                <h2 data-i18n="profileTitle">My Profile</h2>
+                <div class="flash-messages">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, message in messages %}
+                            <div class="flash-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+                <form method="POST" action="{{ url_for('api_profile') }}">
+                    <div class="form-group">
+                        <label for="full_name" data-i18n="registerFullName">Full Name</label>
+                        <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-i18n="registerPhone">Phone</label>
+                        <input type="text" id="phone" name="phone" value="{{ user.phone or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="address" data-i18n="profileAddress">Address</label>
+                        <textarea id="address" name="address" rows="3">{{ user.address or '' }}</textarea>
+                    </div>
+                    <button type="submit" class="btn" data-i18n="profileSave">Save Profile</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
