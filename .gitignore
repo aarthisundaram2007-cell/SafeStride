@@ -1,7 +1,6 @@
 .venv/
+.env
 __pycache__/
 *.pyc
-.env
 database.db
-instance/
-.vscode/
+.pytest_cache/
